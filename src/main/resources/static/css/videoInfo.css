@@ -1,0 +1,97 @@
+a{
+    cursor: pointer;
+    text-decoration: none;
+}
+#container{
+    background: white;
+    overflow: auto;
+}
+.videoInfoContainer{
+    width:895px;
+    margin: 0 auto;
+}
+.videoInfoContainer dt{
+    width: 180px;
+    height: 265px;
+    float: left;
+}
+.videoInfoContainer dt img{
+    width: 100%;
+    height: 100%;
+    border: 2px solid #fff;
+    border-radius: 7px;
+}
+
+.videoInfoContainer dd{
+    width: 685px;
+    height: 300px;
+    padding-left: 20px;
+    overflow: hidden;
+ }
+.videoInfoContainer h1{
+    font-weight: normal;
+    line-height: 1.4rem;
+    margin-bottom: 0;
+    display: inline;
+    font-size: 1.6rem;
+    color: #FE6600;
+    float: left;
+    margin-top: 17px;
+}
+.like-video{
+    float: right;
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+.detail_sc span{
+    color: #999;
+}
+.d_label{
+    width: 50%;
+    float: left;
+    color: #666;
+    line-height: 1.6rem;
+}
+.d_label2{
+    width: 100%;
+    float: left;
+    color: #666;
+    line-height: 1.6rem;
+}
+#video{
+    width:895px;
+    background-color: yellow;
+    height: auto;
+}
+#video ul{
+    width: 100%;
+    margint:0 10px;
+}
+#video li{
+    float: left;
+    margin-right: 10px;
+    margin-top: 10px;
+    position: relative;
+}
+#video em{
+    width: 390px;
+    margin: 0 10px;
+    text-align: left;
+    border-bottom: 1px dashed #e5e5e5;
+    line-height: 1.8rem;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+#video a span{
+    font-size: 0.75rem;
+    background: #f68;
+    border-radius: 4px 4px;
+    padding: 0px 5px;
+    color: #fff;
+    margin-right: 6px;
+}

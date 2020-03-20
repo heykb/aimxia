@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhu.rimxia.biz.mapper.UserNotifyMapper">
+  <resultMap id="BaseResultMap" type="com.zhu.rimxia.biz.model.domain.UserNotify">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_notify_id" jdbcType="BIGINT" property="userNotifyId" />
+    <result column="is_read" jdbcType="BIT" property="isRead" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="notify_id" jdbcType="BIGINT" property="notifyId" />
+  </resultMap>
+  <insert id="insertList" parameterType="com.zhu.rimxia.biz.model.domain.UserNotify">
+    INSERT INTO `user_notify`(`user_notify_id`, `is_read`,`user_id`,`notify_id`)
+    VALUES
+    <foreach collection="list" separator="," item="userNotify">
+      (
+        #{userNotify.userNotifyId,jdbcType=BIGINT},
+        #{userNotify.isRead,jdbcType=BIT},
+        #{userNotify.userId,jdbcType=BIGINT},
+        #{userNotify.notifyId,jdbcType=BIGINT}
+      )
+    </foreach>
+  </insert>
+</mapper>

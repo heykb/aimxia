@@ -1,0 +1,131 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.all-comment{
+    width: 630px;
+    overflow: auto;
+    //background: white;
+    margin: 0 auto;
+}
+.comment-title{
+    font-size: 1.6rem;
+    color: #00a1d6;
+
+}
+.user-face {
+    float: left;
+}
+.con{
+    float: left;
+    margin-left: 20px;
+    width: 557px;
+}
+.user-face img{
+    width: 50px;
+    height: 50px;
+    border-radius: 55px;
+}
+.con a{
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
+    color: #222;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 18px;
+}
+.con a:hover{
+    color: #00a1d6;
+}
+.text{
+    line-height: 20px;
+    padding: 2px 0;
+    font-size: 14px;
+    text-shadow: none;
+    overflow: hidden;
+}
+.info{
+    color: #99a2aa;
+    line-height: 26px;
+    font-size: 12px;
+}
+.info>span{
+    margin-right: 20px;
+}
+.info .like:hover{
+    color: dodgerblue;
+    cursor: pointer;
+}
+.info .reply:hover{
+    color: dodgerblue;
+    cursor: pointer;
+}
+.reply-box{
+    margin-top: 12px;
+    width: 518px;
+}
+.reply-con{
+    width: 490px;
+    float: left;
+    margin-left: 10px;
+}
+.reply-user-face{
+    float: left;
+}
+.reply-user-face img {
+    width: 18px;
+    height: 18px;
+    border-radius: 15px;
+}
+.comment-list{
+    width: 630px;
+}
+.c-container{
+    margin-left: 20px;
+    width: 473px;
+    height: 115px;
+    float: left;
+}
+.not-container{
+    display: block;
+    line-height: 115px;
+    font-size: 12px;
+    border-radius: 4px;
+    text-align: center;
+    color: #777;
+    background-color: #e5e9ef;
+}
+.commen-face{
+    margin-top: 30px;
+}
+#already-login{
+    display: none;
+}
+.login-bto{
+
+    outline: none;
+    color: #00a1d6;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+.sub-comment{
+    margin-left: 20px;
+    display: inline-block;
+    width: 50px;
+    line-height: 115px;
+    font-size: 12px;
+    border-radius: 4px;
+    text-align: center;
+    color: #777;
+    background-color: #e5e9ef;
+}
+.login-bto:hover{
+    cursor: pointer;
+    background: #00a1d6;
+    color: white;
+}
+#not-login{
+//display: none;
+}

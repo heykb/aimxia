@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhu.rimxia.biz.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.zhu.rimxia.biz.model.domain.Comment">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="comment_id" jdbcType="BIGINT" property="commentId" />
+    <result column="target_id" jdbcType="BIGINT" property="targetId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="creater_id" jdbcType="BIGINT" property="createrId" />
+    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+    <result column="user_head_img" jdbcType="VARCHAR" property="userHeadImg" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_auth" jdbcType="BIT" property="isAuth" />
+    <result column="target_type" jdbcType="VARCHAR" property="targetType" />
+  </resultMap>
+</mapper>

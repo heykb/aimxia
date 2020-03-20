@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="./emojionearea/css/emojionearea.css">
+    <script type="text/javascript" src="./emojionearea/js/emojionearea.js"></script>
+    <link href="./layui/css/layui.css" rel="stylesheet"/>
+    <script src="./layui/layui.js"></script>
+    <link href="./css/comment.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="all-comment">
+    <h class="comment-title">评论</h>
+    <hr>
+    <div id="already-login">
+        <div class="user-face commen-face">
+            <a href="#"><img src="./img/2019031402432620546.jpg"></a>
+        </div>
+        <div id="c-container" class="c-container"></div>
+        <div id="example2"></div>
+        <span class="sub-comment login-bto" id="sub-comment" data-target-id="104886607155200" onclick="subComment()">发表</span>
+    </div>
+    <div id="not-login">
+        <div class="user-face commen-face">
+            <a href="#"><img src="./img/noface.gif"></a>
+        </div>
+        <div class="c-container not-container">
+            <span>请先</span>
+            <a href="#" class="login-bto">登录</a>
+            <span>后发表评论</span>
+        </div>
+        <span class="sub-comment layui-btn-disabled" disabled="true" onclick="getComment()">发表</span>
+    </div>
+    <br><br><br><br><br><br>
+    <div class="comment-list">
+        <div class="comment-item">
+        <div class="user-face">
+            <a href="#"><img src="./img/2019031402432620546.jpg"></a>
+        </div>
+        <div class="con">
+            <div class="user">
+                <a href="#">小白</a>
+
+            </div>
+            <p class="text">你是不是饿得慌啊你发的司法鉴定法三方说的发你发送的房间里丝黛芬妮覅水电费</p>
+            <div class="info">
+                <span class="time">2019-05-05 23:42</span>
+                <span class="like"><i class=" layui-icon layui-icon-praise"></i><span>211</span></span>
+                <span class="reply">回复</span>
+            </div>
+            <div class="reply-box">
+                <div class="reply-user-face">
+                    <a href="#"><img src="./img/2019031402432620546.jpg"></a>
+                </div>
+                <div class="reply-con">
+                    <div class="user">
+                        <a href="#">小白</a>
+                        <span>
+                            回复 <a href="#">小白</a>:
+                        </span>
+                        <span class="text">你房间房间送的房间黛芬妮覅水电费</span>
+                        <br>
+                    </div>
+                    <div class="info" data-comment-id="288031073767424">
+                        <span class="time">2019-05-08 23:42</span>
+                        <span class="like"><i class=" layui-icon layui-icon-praise"></i><span>211</span></span>
+                        <span class="reply">回复</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reply-box">
+                <div class="reply-user-face">
+                    <a href="#"><img src="./img/2019031402432620546.jpg"></a>
+                </div>
+                <div class="reply-con">
+                    <div class="user">
+                        <a href="#">小白</a>
+                        <span>
+                            回复 <a href="#">小白</a>:
+                        </span>
+                        <span class="text">你是不你发送的房你发送的房你发送的房间的的房你发送的房间房间里的房你发送的房间黛芬妮覅水电费</span>
+                        <br>
+                    </div>
+                    <div class="info">
+                        <span class="time">2019-05-05 23:42</span>
+                        <span class="like"><i class=" layui-icon layui-icon-praise"></i><span>211</span></span>
+                        <span class="reply">回复</span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+    </div>
+    <div id="comment-page"></div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        layui.use('laypage',function () {
+            var laypage = layui.laypage;
+            laypage.render({
+                elem: 'comment-page' //注意，这里的 test1 是 ID，不用加 # 号
+                ,count: 0 //数据总数，从服务端得到
+                ,groups: 0
+                ,limit: 0
+                // ,jump: function(obj, first){
+                //     //obj包含了当前分页的所有参数，比如：
+                //     console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                //     console.log(obj.limit); //得到每页显示的条数
+                //     //首次不执行
+                //     if(!first){
+                //         //do something
+                //         $.ajax({
+                //             type: "get",
+                //             url: "http://localhost:8080/VideoInfo/selectList/"+obj.curr+"/"+obj.limit,
+                //             contentType: "application/json;charset=utf-8",
+                //             success:function (message) {
+                //                 if(message.code==200){
+                //                     $.ajax({
+                //                         async : false,
+                //                         type: "post",
+                //                         url: "http://localhost:8080/videosTemplate",
+                //                         data:JSON.stringify(message.data.list),
+                //                         contentType: "application/json;charset=utf-8",
+                //                         success:function (message) {
+                //                             $("#template").html(message);
+                //                         },
+                //                         error:function (message) {
+                //                             alert("连接异常");
+                //                         }
+                //                     });
+                //                 }else{
+                //                     alert(message.msg);
+                //                 }
+                //             },
+                //             error:function (message) {
+                //                 alert("连接异常");
+                //             }
+                //         });
+                //     }
+                // }
+            });
+        })
+
+        var el = $("#example2").emojioneArea({
+            useInternalCDN: true,
+            recentEmojis: true,
+            autoHideFilters: true,
+            filtersPosition: "bottom",
+            container: $("#c-container"),
+            tone: false,
+            tonesStyle: "radio",
+            saveEmojisAs: "shortname",
+            events: {
+                focus: function (editor, event) {
+                    console.log('focus');
+
+                },
+            }
+
+        });
+
+        // attach event handler
+        el[0].emojioneArea.on("emojibtn.click", function (button, event) {
+            console.log('event:emojibtn.click, emoji=' + button.children().data("name"));
+        });
+
+        $(".like").click(function () {
+        console.log($(this).parent().data("comment-id"));
+        var commentId = $(this).parent().data("comment-id");
+        $.ajax({
+            type: "get",
+            url: "http://localhost:8080/Comment/likeComment/" + 59471142195200 + "/" + commentId,
+            contentType: "application/json;charset=utf-8",
+            success: function (message) {
+                if (message.code == 200) {
+                    alert(message.msg);
+                } else {
+                    alert(message.msg);
+                }
+            },
+            error: function (message) {
+                alert("连接异常");
+            }
+        });
+    })
+    $(".reply").click(function () {
+        var commentId = $(this).parent().data("comment-id");
+        $("#sub-comment").attr("data-target-id",commentId);
+        $("#sub-comment").text("回复")
+    });
+    })
+
+        function getComment() {
+            console.log($("#example2").text());
+            var out = emojione.toShort($("#example2").text())
+            console.log(out);
+            $("#container").html(emojione.shortnameToImage(out));
+        }
+    function subComment() {
+        var out = emojione.toShort($("#example2").text());
+        console.log(out);
+        var targetType = "anime";
+        var targetId = $("#sub-comment").data("target-id");
+        var json_data = {
+            "content": out,
+            "createrId": 59471142195200,
+            "isAuth": false,
+            "likeNum": 0,
+            "targetId": targetId,
+            "targetType": targetType,
+            "userHeadImg": "string"
+        };
+        $.ajax({
+            type: "post",
+            url: "http://localhost:8080/Comment/add",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(json_data),
+            success: function (message) {
+                if (message.code == 200) {
+                    alert(message.msg);
+                } else {
+                    alert(message.msg);
+                }
+            },
+            error: function (message) {
+                alert("连接异常");
+            }
+        });
+    }
+
+
+
+</script>
+</body>
+</html>

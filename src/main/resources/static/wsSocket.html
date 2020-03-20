@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Welcome<br/>
+    <input id="text" type="text" /><button onclick="send()">Send</button>    <button onclick="closeWebSocket()">Close</button>
+    <div id="message">
+    </div>
+</body>
+<script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    var ws = new SockJS("http://localhost:8080/stomp-websocket?token=XXXX");
+    var stompClient = Stomp.over(ws);
+    stompClient.connect({}, function () {
+        //console.log("jldjfsdofijsdfi")
+        //订阅服务端的/topic/greeting地址
+        stompClient.subscribe("/topic/59471142195200", function (greeting) {
+            console.log("接受到消息："+greeting.body);
+            //log('Received: ' + JSON.parse(greeting.body).content);
+        })
+
+    },function () {
+
+        //断开处理
+
+    });
+    function send(){
+        var message = document.getElementById('text').value;
+        $.ajax({
+            async : false,
+            type: "get",
+            url: "http://localhost:8080/wsTemplate/user/123456/"+message,
+            contentType: "application/json;charset=utf-8",
+            success:function (message) {
+                console.log("已发送");
+            },
+            error:function (message) {
+                alert("连接异常");
+            }
+        });
+        //websocket.send(message);
+    }
+</script>
+<!--<script>-->
+    <!--var websocket = null;-->
+    <!--//判断当前浏览器是否支持WebSocket-->
+    <!--if('WebSocket' in window){-->
+        <!--websocket = new WebSocket("ws://localhost:8080/websocket/123456");-->
+    <!--}-->
+    <!--else{-->
+        <!--alert('Not support websocket')-->
+    <!--}-->
+
+    <!--//将消息显示在网页上-->
+    <!--function setMessageInnerHTML(innerHTML){-->
+        <!--document.getElementById('message').innerHTML += innerHTML + '<br/>';-->
+    <!--}-->
+    <!--//连接发生错误的回调方法-->
+    <!--websocket.onerror = function(){-->
+        <!--setMessageInnerHTML("error");-->
+    <!--};-->
+    <!--websocket.onopen = function () {-->
+        <!--setMessageInnerHTML("open");-->
+    <!--}-->
+    <!--websocket.onmessage = function (event) {-->
+        <!--setMessageInnerHTML(event.data);-->
+    <!--}-->
+    <!--//连接关闭的回调方法-->
+    <!--websocket.onclose = function(){-->
+        <!--setMessageInnerHTML("close");-->
+    <!--}-->
+    <!--window.onbeforeunload = function (ev) {-->
+        <!--websocket.close();-->
+    <!--}-->
+
+    <!--//发送消息-->
+    <!--function send(){-->
+        <!--var message = document.getElementById('text').value;-->
+        <!--console.log(message);-->
+        <!--$.ajax({-->
+            <!--async : false,-->
+            <!--type: "get",-->
+            <!--url: "http://localhost:8080/webSocket/sendToUser/123456/"+message,-->
+            <!--contentType: "application/json;charset=utf-8",-->
+            <!--success:function (message) {-->
+
+            <!--},-->
+            <!--error:function (message) {-->
+                <!--alert("连接异常");-->
+            <!--}-->
+        <!--});-->
+        <!--//websocket.send(message);-->
+    <!--}-->
+<!--</script>-->
+</html>

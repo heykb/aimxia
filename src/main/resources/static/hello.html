@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+    <script src="./layui/layui.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <link rel="stylesheet" type="text/css" href="./font/iconfont.css">
+    <link href="./layui/css/layui.css" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <div>
+        </div>
+        <nav class="top_menu">
+            <ul class="menu">
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="#">新番</a></li>
+                <li class="down_body">
+                    <a href="#" >分类</a>
+                    <div class="down_show">
+                        <div class="down_show1"><a href="#">热血</a></div>
+                        <div><a href="#">热血</a></div>
+                    </div>
+                </li>
+                <li><a href="#">推荐</a></li>
+                <li id="searchBox">
+                    <form>
+                        <input type="text" class="search"/>
+                        <i class="iconfont icon-sousuo go "></i>
+                    </form>
+
+                </li>
+
+                <li>
+                    <a href="#" id="history">播放记录</a>
+                </li>
+                <li class="down_body" id="personalCenter">
+                    <a href="#">加入</a>
+                    <div class="down_show">
+                        <div class="down_show1"><a href="register.html">注册</a></div>
+                        <div><a href="login.html">登录</a></div>
+                    </div>
+                </li>
+                <li id="headImg" class="down_body">
+                    <div><a href="#"><img src="./img/2019031402432620546.jpg"></a></div>
+                    <div class="down_show">
+                        <div class="down_show1"><a href="#">个人中心</a></div>
+                        <div><a href="#" onclick="logout()">退出</a></div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <div id="top"></div>
+    <div id="bo">
+        <div id="template"></div>
+        <div id="page"></div>
+    </div>
+
+    <footer class="footer">
+
+            <p>免责声明：本网站所有内容都是靠程序在互联网上自动搜集而来，仅供测试和学习交流。<br>目前正在逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。</p>
+
+            <p>若侵犯了您的权益，请即时发邮件通知站长，万分感谢！</p>
+            <!--<em><a href="/">♥ 嘀哩嘀哩 </a></em>-->
+
+    </footer>
+
+
+<script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="./js/jquery.base64.js"></script>
+
+
+<script>
+    //获取cookie
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++)
+        {
+            var c = ca[i].trim();
+            if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+        }
+        return "";
+    }
+    function delCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval=getCookie(name);
+        if(cval!=null)
+            document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+    }
+    //获取头像
+    function getHeadImgUrl(userId) {
+        var headImg = "";
+        $.ajax({
+            async : false,
+            type: "get",
+            url: "http://localhost:8080/Member/getHeadImg/"+userId,
+            contentType: "application/json;charset=utf-8",
+            success:function (message) {
+                if(message.code==200){
+                   headImg =  message.data;
+                }else{
+                    alert(message.msg);
+                }
+            },
+            error:function (message) {
+                alert("连接异常");
+            }
+        });
+        return headImg;
+    }
+    var access_token = getCookie("access_token");
+    if(access_token!=""){
+        var payload = JSON.parse(window.atob(access_token.split('.')[1]));
+        var userId = payload.sub;
+        console.log(payload);
+        console.log(userId);
+        var headImg = getHeadImgUrl(userId);
+        if(headImg != ""){
+            $('#personalCenter').css('display','none');
+            $('#headImg img').attr('src',headImg);
+            $('#headImg').css('display','block');
+        }
+    }
+
+
+    //导航栏下滑顶部显示
+    window.onscroll=function(){
+
+        var scrollTop=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop;
+        if(scrollTop<5){
+            $('header').css('height','160px');
+        }else{
+            $('header').css('height','46px');
+        }
+    }
+    //退出登录
+    function  logout() {
+        delCookie("access_token");
+        location.reload(true);
+    }
+
+    //分页
+    var total;
+    $.ajax({
+        async : false,
+        type: "get",
+        url: "http://localhost:8080/VideoInfo/selectList/1/3",
+        contentType: "application/json;charset=utf-8",
+        success:function (message) {
+            if(message.code==200){
+                total = message.data.total;
+                console.log(message.data.list);
+                $.ajax({
+                    async : false,
+                    type: "post",
+                    url: "http://localhost:8080/videosTemplate",
+                    data:JSON.stringify(message.data.list),
+                    contentType: "application/json;charset=utf-8",
+                    success:function (message) {
+                       $("#template").html(message);
+                    },
+                    error:function (message) {
+                        alert("连接异常");
+                    }
+                });
+            }else{
+                alert(message.msg);
+            }
+        },
+        error:function (message) {
+            alert("连接异常");
+        }
+    });
+    layui.use('laypage',function () {
+        var laypage = layui.laypage;
+        laypage.render({
+            elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
+            ,count: total //数据总数，从服务端得到
+            ,groups: 5
+            ,limit: 3
+            ,jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
+                //首次不执行
+                if(!first){
+                    //do something
+                    $.ajax({
+                        type: "get",
+                        url: "http://localhost:8080/VideoInfo/selectList/"+obj.curr+"/"+obj.limit,
+                        contentType: "application/json;charset=utf-8",
+                        success:function (message) {
+                            if(message.code==200){
+                                $.ajax({
+                                    async : false,
+                                    type: "post",
+                                    url: "http://localhost:8080/videosTemplate",
+                                    data:JSON.stringify(message.data.list),
+                                    contentType: "application/json;charset=utf-8",
+                                    success:function (message) {
+                                        $("#template").html(message);
+                                    },
+                                    error:function (message) {
+                                        alert("连接异常");
+                                    }
+                                });
+                            }else{
+                                alert(message.msg);
+                            }
+                        },
+                        error:function (message) {
+                            alert("连接异常");
+                        }
+                    });
+                }
+            }
+        });
+    })
+</script>
+</body>
+</html>

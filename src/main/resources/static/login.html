@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link href="./layui/css/layui.css" rel="stylesheet"/>
+    <script src="./layui/layui.js"></script>
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="./js/jquery.base64.js"></script>
+</head>
+<style>
+
+    .center{
+        width: 335px;
+        overflow: auto;
+        margin: 110px auto;
+    }
+</style>
+<body>
+<div class="center">
+
+
+<form class="layui-form" style="margin-left: -16px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="loginName" required  lay-verify="required"
+                   placeholder="用户名/邮箱" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="password" id="password"
+                   required lay-verify="required" placeholder="请输入密码"
+                   autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-inline"  style="margin-left: -6px">
+            <input type="text" name="valicode" required  lay-verify="required"
+                   placeholder="验证码" autocomplete="off" class="layui-input"
+                   style="width:75px;float: right">
+        </div>
+        <img  id="valicodeImg"
+              style="width:70px;height:35px;padding:0;margin-left: 10px;cursor: pointer"/>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+    <input type="hidden" id = "key" name="key" >
+</form>
+<div id="test1"></div>
+</div>
+<script type="application/javascript">
+
+    getValicodeImg();
+    $("#valicodeImg").click(function () {
+        getValicodeImg();
+    })
+    function  getValicodeImg(){
+        $.ajax({
+            type:"GET",
+            url:"http://10.7.0.154:8080/Member/makeValicoeImg",
+            dataType:"json",
+            success:function(data){
+                $("#valicodeImg").attr('src',data.data.imgUrl);
+                $("#key").attr('value',data.data.key);
+                console.log(data.data.imgUrl);
+            }
+        });
+    }
+
+
+
+    layui.use('form', function(){
+        var form = layui.form;
+
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+             $.ajax({
+                 async : false,
+                type: "POST",
+                url: "http://10.7.0.154:8080/login",
+                contentType: "application/json;charset=utf-8",
+                data:JSON.stringify(data.field),
+                dataType: "json",
+                success:function (message) {
+                    if(message.code==200){
+                        //将token放入cookie
+                        var expire= new Date();
+                        expire.setTime(expire.getTime() + (60*1000*60*24));
+                        console.log('access_token='+message.data+';expires='+expire+';path=/');
+                        document.cookie='access_token='+message.data+';expires='+expire.toUTCString();
+                        console.log(message.data);
+                        if(document.referrer.search("localhost") != -1){
+                            window.location.href=document.referrer;
+                        }else{
+                            window.location.href = "http://localhost:63342/rimxia/static/hello.html";
+                        }
+                    }else if(message.code==1007){
+                        console.log(message.code);
+                        //发送激活链接到邮箱
+                        var loginName = data.field.loginName;
+                        layer.open({
+                            title:"抱歉！您未激活",
+                            content:"点击确定发送激活链接到邮箱",
+                            shadeClose:true,
+                            yes: function(index, layero){
+                                $.ajax({
+                                    async : false,
+                                    type: "get",
+                                    url: "http://10.7.0.154:8080/Member/sendActivationUrl/"+loginName,
+                                    contentType: "application/json;charset=utf-8",
+                                    success:function (message) {
+                                        if(message.code==200){
+                                            layer.msg("发送成功");
+                                        }else{
+                                            layer.msg(message.msg);
+                                        }
+                                    },
+                                    error:function (message) {
+                                        layer.msg("连接异常");
+                                    }
+                                });
+                                //do something
+                                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                            }})
+
+                    }else{
+                        layer.msg(message.msg);
+                    }
+                },
+                error:function (message) {
+                    layer.msg("连接异常");
+                }
+            });
+             return false;
+        })
+
+        return false;
+    })
+</script>
+</body>
+</html>

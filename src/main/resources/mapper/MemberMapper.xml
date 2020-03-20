@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhu.rimxia.biz.mapper.MemberMapper">
+  <resultMap id="BaseResultMap" type="com.zhu.rimxia.biz.model.domain.Member">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="email_addr" jdbcType="VARCHAR" property="emailAddr" />
+    <result column="is_disable" jdbcType="INTEGER" property="isDisable" />
+    <result column="is_del" jdbcType="BIT" property="isDel" />
+    <result column="roles" jdbcType="VARCHAR" property="roles" />
+    <result column="permissions" jdbcType="VARCHAR" property="permissions" />
+    <result column="disable_comment" jdbcType="BIGINT" property="disableComment" />
+  </resultMap>
+
+</mapper>

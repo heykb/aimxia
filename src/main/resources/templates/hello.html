@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{~/css/main.css}">
+    <link rel="stylesheet" type="text/css" href="../static/font/iconfont.css" th:href="@{~/font/iconfont.css}">
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            th:src="@{http://code.jquery.com/jquery-3.3.1.min.js}"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="../static/js/jquery.base64.js" th:src="@{../static/js/jquery.base64.js}"></script>
+    <link href="../static/layui/css/layui.css" th:href="@{../static/layui/css/layui.css}" rel="stylesheet"/>
+    <script src="../static/layui/layui.js" th:href="@{../static/layui/layui.js}"></script>
+
+</head>
+<body>
+
+<div id="body" th:fragment="bodys">
+    <div id="label">
+        <h2>最新动漫</h2>
+    </div>
+    <div id="videos">
+        <div class="card" th:each="video:${results}">
+            <div class="item" >
+                <a style="position:relative;display:block;" th:title="${video.videoName}" target="_blank" th:href="@{'http://localhost:8080/hello2.html?videoInfoId='+${video.videoInfoId}}" id="videoCover"
+                   th:attr="data-id=${video.videoInfoId}">
+                    <img  th:title="${video.videoName}" th:src="@{${video.cover}}" height="230" width="100%">
+                    <button class="hdtag" >更新至<span th:text="${video.newEpisode}"></span></button>
+                </a>
+                <div class="meta">
+                    <div style="width:100%;overflow:hidden;"><a th:href="@{'http://localhost:8080/hello2.html?videoInfoId='+${video.videoInfoId}}" target="_blank"
+                          th:title="${video.videoName}" th:text="${video.videoName}">少年歌行</a></div>
+                    <div class="otherinfo">更新时间：<span th:text="${#dates.format(video.updateTime, 'yyyy-MM-dd')}">2019-03-13</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</body>
+</html>

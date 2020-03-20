@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhu.rimxia.biz.mapper.VideoMapper">
+  <resultMap id="BaseResultMap" type="com.zhu.rimxia.biz.model.domain.Video">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="video_id" jdbcType="BIGINT" property="videoId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="video_info_id" jdbcType="BIGINT" property="videoInfoId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="video_name" jdbcType="VARCHAR" property="videoName" />
+  </resultMap>
+
+  <insert id="insertList" parameterType="com.zhu.rimxia.biz.model.domain.Video">
+    INSERT INTO `video`( `video_id`, `video_info_id`,`url`,`type` ,`sort`, `create_time`,`video_name`)
+    VALUES
+    <foreach collection="list" item="video" separator=",">
+      (
+        #{video.videoId,jdbcType=BIGINT},
+        #{video.videoInfoId,jdbcType=BIGINT},
+        #{video.url,jdbcType=VARCHAR},
+        #{video.type,jdbcType=INTEGER},
+        #{video.sort,jdbcType=INTEGER},
+        #{video.createTime,jdbcType=TIMESTAMP},
+        #{video.videoName,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+
+    <select id="selectByVideoInfoId" parameterType="Long" resultMap="BaseResultMap">
+        SELECT
+          vd.video_info_id, vd.url, vd.type, vd.sort, vd.video_id,vd.video_name
+        from
+          video
+        as
+          vd
+        WHERE
+          video_info_id = #{videoInfoId};
+    </select>
+</mapper>

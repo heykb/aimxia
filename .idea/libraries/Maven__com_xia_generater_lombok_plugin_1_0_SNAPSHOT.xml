@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.xia:generater-lombok-plugin:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$APPLICATION_HOME_DIR$/repository/com/xia/generater-lombok-plugin/1.0-SNAPSHOT/generater-lombok-plugin-1.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$APPLICATION_HOME_DIR$/repository/com/xia/generater-lombok-plugin/1.0-SNAPSHOT/generater-lombok-plugin-1.0-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$APPLICATION_HOME_DIR$/repository/com/xia/generater-lombok-plugin/1.0-SNAPSHOT/generater-lombok-plugin-1.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

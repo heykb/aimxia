@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+    <script src="./layui/layui.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <link rel="stylesheet" type="text/css" href="./font/iconfont.css">
+    <link href="./layui/css/layui.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="./css/videoInfo.css">
+    <link href="./css/comment.css" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <div>
+        </div>
+        <nav class="top_menu">
+            <ul class="menu">
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="#">新番</a></li>
+                <li class="down_body">
+                    <a href="#" >分类</a>
+                    <div class="down_show">
+                        <div class="down_show1"><a href="#">热血</a></div>
+                        <div><a href="#">热血</a></div>
+                    </div>
+                </li>
+                <li><a href="#">推荐</a></li>
+                <li id="searchBox">
+                    <form>
+                        <input type="text" class="search"/>
+                        <i class="iconfont icon-sousuo go "></i>
+                    </form>
+
+                </li>
+
+                <li>
+                    <a href="#" id="history">播放记录</a>
+                </li>
+                <li class="down_body" id="personalCenter">
+                    <a href="#">加入</a>
+                    <div class="down_show">
+                        <div class="down_show1"><a href="register.html">注册</a></div>
+                        <div><a href="login.html">登录</a></div>
+                    </div>
+                </li>
+                <li id="headImg" class="down_body">
+                    <div><a href="#"><img src="./img/2019031402432620546.jpg"></a></div>
+                    <div class="down_show">
+                        <div class="down_show1"><a href="#">个人中心</a></div>
+                        <div><a href="#" onclick="logout()">退出</a></div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <div id="top"></div>
+    <div id="all-videoInfo">
+        <div id="container" th:fragment="container">
+
+
+            <div class="videoInfoContainer" >
+                <dt>
+                    <img th:src="@{videoInfoDo.cover}" src="http://www.dilidili.name/uploads/allimg/180810/290_1807496251.jpg">
+                </dt>
+                <dd>
+                    <h1 th:text="${videoInfoDo.videoName}">一拳超人第二季</h1>
+                    <div class="like-video">
+                        <a class="detail_sc" href="javascript:;">
+                            <span id="zzlike"><i class="layui-icon layui-icon-rate" style="font-size: 30px; color:red;"></i>  收藏</span>
+                        </a>
+                    </div>
+                    <br>
+                    <p style="margin-top: 55px"></p>
+
+                    <div class="d_label">
+                        <b>地区：</b>
+                        <a th:text="${videoInfoDo.addr}">日本</a>
+                    </div>
+                    <div class="d_label">
+                        <b>年代：</b>
+                        <a th:text="${#dates.format(videoInfoDo.createTime, 'yyyy-MM-dd')}">2019年4月</a>
+                    </div>
+                    <div class="d_label2">
+                        <b>简介：</b>
+                        <span th:text="${videoInfoDo.summary}">
+            </span>
+                    </div>
+                    <div class="d_label2">
+                        <b style="color:#F00">更新时间:</b>
+                        <span th:text="${#dates.format(videoInfoDo.updateTime, 'yyyy-MM-dd')}">2019年4月5号02:00</span>
+                    </div>
+
+                </dd>
+            </div>
+            <div id="video" >
+                <ul>
+                    <li th:each="item:${videoInfoDo.videos}">
+                        <a>
+                            <em>
+                                <span th:if="${item.type}==0">pv <i th:text="${item.sort}"> </i> </span>
+                                <span th:if="${item.type}==1">第 <i th:text="${item.sort}"></i>  话</span>
+                                <i th:text="${videoInfoDo.videoName}">一拳超人第二季 </i >
+                                <i th:text="${item.videoName}">英雄归来</i>
+                            </em>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="all-comment">
+        <div class="all-comment">
+            <h class="comment-title">评论</h>
+            <hr>
+            <div id="already-login">
+                <div class="user-face commen-face">
+                    <a href="#"><img src="./img/2019031402432620546.jpg"></a>
+                </div>
+                <div id="c-container" class="c-container"></div>
+                <div id="example2"></div>
+                <span class="sub-comment login-bto" id="sub-comment" data-target-id="104886607155200" onclick="subComment()">发表</span>
+            </div>
+            <div id="not-login">
+                <div class="user-face commen-face">
+                    <a href="#"><img src="./img/noface.gif"></a>
+                </div>
+                <div class="c-container not-container">
+                    <span>请先</span>
+                    <a href="#" class="login-bto">登录</a>
+                    <span>后发表评论</span>
+                </div>
+                <span class="sub-comment layui-btn-disabled" disabled="true" onclick="getComment()">发表</span>
+            </div>
+            <br><br><br><br><br><br>
+            <div class="comment-list">
+                <div class="comment-item">
+                    <div class="user-face">
+                        <a href="#"><img src="./img/2019031402432620546.jpg"></a>
+                    </div>
+                    <div class="con">
+                        <div class="user">
+                            <a href="#">小白</a>
+
+                        </div>
+                        <p class="text">你是不是饿得慌啊你发的司法鉴定法三方说的发你发送的房间里丝黛芬妮覅水电费</p>
+                        <div class="info">
+                            <span class="time">2019-05-05 23:42</span>
+                            <span class="like"><i class=" layui-icon layui-icon-praise"></i><span>211</span></span>
+                            <span class="reply">回复</span>
+                        </div>
+                        <div class="reply-box">
+                            <div class="reply-user-face">
+                                <a href="#"><img src="./img/2019031402432620546.jpg"></a>
+                            </div>
+                            <div class="reply-con">
+                                <div class="user">
+                                    <a href="#">小白</a>
+                                    <span>
+                            回复 <a href="#">小白</a>:
+                        </span>
+                                    <span class="text">你房间房间送的房间黛芬妮覅水电费</span>
+                                    <br>
+                                </div>
+                                <div class="info" data-comment-id="288031073767424">
+                                    <span class="time">2019-05-08 23:42</span>
+                                    <span class="like"><i class=" layui-icon layui-icon-praise"></i><span>211</span></span>
+                                    <span class="reply">回复</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reply-box">
+                            <div class="reply-user-face">
+                                <a href="#"><img src="./img/2019031402432620546.jpg"></a>
+                            </div>
+                            <div class="reply-con">
+                                <div class="user">
+                                    <a href="#">小白</a>
+                                    <span>
+                            回复 <a href="#">小白</a>:
+                        </span>
+                                    <span class="text">你是不你发送的房你发送的房你发送的房间的的房你发送的房间房间里的房你发送的房间黛芬妮覅水电费</span>
+                                    <br>
+                                </div>
+                                <div class="info">
+                                    <span class="time">2019-05-05 23:42</span>
+                                    <span class="like"><i class=" layui-icon layui-icon-praise"></i><span>211</span></span>
+                                    <span class="reply">回复</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div id="comment-page"></div>
+        </div>
+    </div>
+
+
+    <footer class="footer">
+
+            <p>免责声明：本网站所有内容都是靠程序在互联网上自动搜集而来，仅供测试和学习交流。<br>目前正在逐步删除和规避程序自动搜索采集到的不提供分享的版权影视。</p>
+
+            <p>若侵犯了您的权益，请即时发邮件通知站长，万分感谢！</p>
+            <!--<em><a href="/">♥ 嘀哩嘀哩 </a></em>-->
+
+    </footer>
+
+
+<script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="./js/jquery.base64.js"></script>
+
+
+<script>
+    //获取cookie
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++)
+        {
+            var c = ca[i].trim();
+            if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+        }
+        return "";
+    }
+    function delCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval=getCookie(name);
+        if(cval!=null)
+            document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+    }
+    //获取头像
+    function getHeadImgUrl(userId) {
+        var headImg = "";
+        $.ajax({
+            async : false,
+            type: "get",
+            url: "http://localhost:8080/Member/getHeadImg/"+userId,
+            contentType: "application/json;charset=utf-8",
+            success:function (message) {
+                if(message.code==200){
+                   headImg =  message.data;
+                }else{
+                    alert(message.msg);
+                }
+            },
+            error:function (message) {
+                alert("连接异常");
+            }
+        });
+        return headImg;
+    }
+    var access_token = getCookie("access_token");
+    if(access_token!=""){
+        var payload = JSON.parse(window.atob(access_token.split('.')[1]));
+        var userId = payload.sub;
+        console.log(payload);
+        console.log(userId);
+        var headImg = getHeadImgUrl(userId);
+        if(headImg != ""){
+            $('#personalCenter').css('display','none');
+            $('#headImg img').attr('src',headImg);
+            $('#headImg').css('display','block');
+        }
+    }
+
+
+
+    //导航栏下滑顶部显示
+    window.onscroll=function(){
+
+        var scrollTop=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop;
+        if(scrollTop<5){
+            $('header').css('height','160px');
+        }else{
+            $('header').css('height','46px');
+        }
+    }
+    //退出登录
+    function  logout() {
+        delCookie("access_token");
+        location.reload(true);
+    }
+    //获取url路劲参数
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var url=decodeURI(decodeURI(window.location.search))
+        var r = url.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
+    var videoInfoId = getQueryString("videoInfoId");
+    console.log(videoInfoId);
+    $.ajax({
+        async : false,
+        type: "get",
+        url: "http://localhost:8080/VideoInfo/getDetailById/"+videoInfoId,
+        contentType: "application/json;charset=utf-8",
+        success:function (message) {
+            if(message.code==200){
+                console.log(message.data);
+                $.ajax({
+                    async : false,
+                    type: "post",
+                    url: "http://localhost:8080/videoInfoTemplate",
+                    data:JSON.stringify(message.data),
+                    contentType: "application/json;charset=utf-8",
+                    success:function (message) {
+                        console.log(message);
+                        $("#all-videoInfo").html(message);
+                    },
+                    error:function (message) {
+                        alert("连接异常");
+                    }
+                });
+            }else{
+                alert(message.msg);
+            }
+        },
+        error:function (message) {
+            alert("连接异常");
+        }
+    });
+
+</script>
+
+</body>
+</html>

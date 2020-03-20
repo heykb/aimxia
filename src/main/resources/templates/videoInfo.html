@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/videoInfo.css" th:href="@{~/css/videoInfo.css}">
+    <link href="../static/layui/css/layui.css" th:href="@{~/layui/css/layui.css}" rel="stylesheet"/>
+    <script src="../static/layui/layui.js" th:href="@{~/layui/css/layui.js}"></script>
+</head>
+<body>
+<div id="container" th:fragment="container">
+
+
+<div class="videoInfoContainer" >
+    <dt>
+        <img th:src="@{videoInfoDo.cover}" src="http://www.dilidili.name/uploads/allimg/180810/290_1807496251.jpg">
+    </dt>
+    <dd>
+        <h1 th:text="${videoInfoDo.videoName}">一拳超人第二季</h1>
+        <div class="like-video">
+            <a class="detail_sc" href="javascript:;">
+                <span id="zzlike"><i class="layui-icon layui-icon-rate" style="font-size: 30px; color:red;"></i>  收藏</span>
+            </a>
+        </div>
+        <br>
+        <p style="margin-top: 55px"></p>
+
+        <div class="d_label">
+            <b>地区：</b>
+            <a th:text="${videoInfoDo.addr}">日本</a>
+        </div>
+        <div class="d_label">
+            <b>年代：</b>
+            <a th:text="${#dates.format(videoInfoDo.createTime, 'yyyy-MM-dd')}">2019年4月</a>
+        </div>
+        <div class="d_label2">
+            <b>简介：</b>
+            <span th:text="${videoInfoDo.summary}">
+            </span>
+        </div>
+        <div class="d_label2">
+            <b style="color:#F00">更新时间:</b>
+            <span th:text="${#dates.format(videoInfoDo.updateTime, 'yyyy-MM-dd')}">2019年4月5号02:00</span>
+        </div>
+
+    </dd>
+</div>
+<div id="video" >
+    <ul>
+        <li th:each="item:${videoInfoDo.videos}">
+            <a>
+                <em>
+                    <span th:if="${item.type}==0">pv <i th:text="${item.sort}"> </i> </span>
+                    <span th:if="${item.type}==1">第 <i th:text="${item.sort}"></i>  话</span>
+                    <i th:text="${videoInfoDo.videoName}">一拳超人第二季 </i >
+                    <i th:text="${item.videoName}">英雄归来</i>
+                </em>
+            </a>
+        </li>
+
+    </ul>
+</div>
+</div>
+</body>
+</html>

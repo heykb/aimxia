@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhu.rimxia.biz.mapper.VideoInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zhu.rimxia.biz.model.domain.VideoInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="video_info_id" jdbcType="BIGINT" property="videoInfoId" />
+    <result column="video_name" jdbcType="VARCHAR" property="videoName" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="episodes" jdbcType="INTEGER" property="episodes" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="new_episode" jdbcType="INTEGER" property="newEpisode" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+    <resultMap id="BaseResultDoMap" type="com.zhu.rimxia.biz.model.modelDo.VideoInfoDo">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="video_info_id" jdbcType="BIGINT" property="videoInfoId" />
+        <result column="video_name" jdbcType="VARCHAR" property="videoName" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="addr" jdbcType="VARCHAR" property="addr" />
+        <result column="episodes" jdbcType="INTEGER" property="episodes" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
+        <result column="new_episode" jdbcType="INTEGER" property="newEpisode" />
+        <result column="cover" jdbcType="VARCHAR" property="cover" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <collection column="video_info_id" property="videos"
+                    ofType="com.zhu.rimxia.biz.model.domain.Video"
+                    select="com.zhu.rimxia.biz.mapper.VideoMapper.selectByVideoInfoId"/>
+    </resultMap>
+    <select id="getDetailById" parameterType="long"  resultMap="BaseResultDoMap">
+        SELECT
+            vf.video_info_id,
+            vf.video_name,
+            vf.type,
+            vf.addr,
+            vf.episodes,
+            vf.summary,
+            vf.new_episode,
+            vf.cover,
+            vf.update_time,
+            vf.create_time
+        FROM
+            video_info AS vf
+        WHERE
+            vf.video_info_id = #{videoInfoId}
+        ;
+    </select>
+
+
+</mapper>
